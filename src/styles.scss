@@ -1,0 +1,47 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$primary: (
+  50: #e5e9ee,
+  100: #bfc8d6,
+  200: #94a3ba,
+  300: #697e9e,
+  400: #48638a,
+  500: #24559f,
+  600: #24406d,
+  700: #1e3762,
+  800: #182f58,
+  900: #0f2045,
+  A100: #7fa2ff,
+  A200: #4c7dff,
+  A400: #1958ff,
+  A700: #0046fe,
+  contrast: (
+    50: #000,
+    100: #000,
+    200: #000,
+    300: #fff,
+    400: #fff,
+    500: #fff,
+    600: #fff,
+    700: #fff,
+    800: #fff,
+    900: #fff,
+    A100: #000,
+    A200: #fff,
+    A400: #fff,
+    A700: #fff
+  )
+);
+
+$app-primary: mat-palette($primary);
+$app-theme: mat-light-theme($app-primary, $app-primary);
+
+@include angular-material-theme($app-theme);
+
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}

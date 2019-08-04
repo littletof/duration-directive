@@ -1,0 +1,29 @@
+<div class="outer">
+
+
+  <form #form="ngForm">
+    <mat-form-field class="field" color="accent" appearance="outline">
+      <mat-label>WORKFLOW_DURATION</mat-label>
+
+      <input
+        name="duration"
+        matInput
+        appDuration
+        placeholder="{{ 'WORKFLOW_DURATION' }}"
+        [(ngModel)]="duration"
+        required
+      />
+
+      <mat-error *ngIf="form.controls['duration']?.errors; let errors" [ngSwitch]="(errors | keyvalue)[0].key">
+        <span *ngSwitchCase="'required'">{{ 'WORKFLOW_DURATION_MISSING' }}</span>
+        <span *ngSwitchCase="'pattern'">{{ 'WORKFLOW_DURATION_PARSE_ERROR' }}</span>
+      </mat-error>
+    </mat-form-field>
+    
+    <div>
+      NgModel value: {{duration}}
+    </div>
+  </form>
+
+
+</div>
