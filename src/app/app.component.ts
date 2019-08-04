@@ -8,5 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'duration-directive';
 
-  duration = 0;
+  duration = 150;
+
+  disabledDuration = 0;
+  
+  constructor() {
+    setInterval(() => this.disabledDuration += 1, 1000);
+  }
 }
