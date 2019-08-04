@@ -7,7 +7,7 @@ export class DurationService {
   numRegx = '[1-9][0-9]*';
   decimalRegx = `[0-9]*[\\.,][0-9]*[1-9][0-9]*`;
   spaceRegx = `[\\s]*`;
-  hrRegx = `${this.spaceRegx}[óÓhH:]${this.spaceRegx}`; // TODO : handle differently ( 1: -> 1ó engedjük e)
+  hrRegx = `${this.spaceRegx}[óÓhH:]${this.spaceRegx}`; // TODO : handle differently ( 1: -> 1ó engedjük e), :15 nem parsolja
   minRegx = `${this.spaceRegx}[pPmM]${this.spaceRegx}`;
 
   justNumbers = `^${this.numRegx}${this.spaceRegx}$`; // 150 -> 150 perc
@@ -72,6 +72,7 @@ export class DurationService {
       return;
     }
 
+    // convert to <x>h<y> format
     if (value.match(this.justNumbers)) {
       // 150 -> 150 perc
       value = `0h${value}`;
