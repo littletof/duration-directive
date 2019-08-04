@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DurationService } from './duration.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('DurationService', () => {
   let service: DurationService;
@@ -91,7 +90,7 @@ describe('DurationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()]
+      imports: []
     });
     service = TestBed.get(DurationService);
   });

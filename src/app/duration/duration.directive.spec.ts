@@ -2,10 +2,9 @@ import { DurationDirective } from './duration.directive';
 import { Component, DebugElement, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Spied } from '../../../typings';
 import { DurationService } from './duration.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { AbstractControl } from '@angular/forms';
+import { Spied } from 'src/typings';
 
 describe('DurationDirective', () => {
   let directive: DurationDirective;
@@ -119,7 +118,8 @@ describe('DurationDirective', () => {
   init = () => {
     fixture = TestBed.configureTestingModule({
       declarations: [DurationDirective, TestComponent],
-      imports: [TranslateModule.forRoot()]
+      imports: [
+    ]
     }).createComponent(TestComponent);
 
     input = fixture.debugElement.query(By.directive(DurationDirective));
