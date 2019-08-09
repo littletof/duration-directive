@@ -1,17 +1,17 @@
-import { DurationDirective } from './duration.directive';
+import { NgxDurationInputDirective } from './ngx-duration-input.directive';
 import { Component, DebugElement, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DurationService } from './duration.service';
 import { AbstractControl } from '@angular/forms';
 import { Spied } from 'src/typings';
+import { NgxDurationInputService } from './ngx-duration-input.service';
 
-describe('DurationDirective', () => {
-  let directive: DurationDirective;
+describe('NgxDurationInputDirective', () => {
+  let directive: NgxDurationInputDirective;
   let init: () => void;
   let fixture: any;
   let input: DebugElement;
-  let durationServiceMock: Spied<DurationService>;
+  let durationServiceMock: Spied<NgxDurationInputService>;
   let rendererMock: Spied<Renderer2>;
 
   beforeEach(() => init());
@@ -117,12 +117,12 @@ describe('DurationDirective', () => {
   // tslint:disable: no-use-before-declare
   init = () => {
     fixture = TestBed.configureTestingModule({
-      declarations: [DurationDirective, TestComponent],
+      declarations: [NgxDurationInputDirective, TestComponent],
       imports: [
     ]
     }).createComponent(TestComponent);
 
-    input = fixture.debugElement.query(By.directive(DurationDirective));
+    input = fixture.debugElement.query(By.directive(NgxDurationInputDirective));
 
     durationServiceMock = jasmine.createSpyObj('DurationService', [
       'getDurationString',
@@ -135,14 +135,14 @@ describe('DurationDirective', () => {
 
     rendererMock = jasmine.createSpyObj('Renderer2', ['setProperty']);
 
-    directive = new DurationDirective((durationServiceMock as any) as DurationService, rendererMock, input);
+    directive = new NgxDurationInputDirective((durationServiceMock as any) as NgxDurationInputService, rendererMock, input);
 
     fixture.detectChanges();
   };
 
   @Component({
     template: `
-      <input appDuration />
+      <input ngxDuration />
     `
   })
   class TestComponent {}

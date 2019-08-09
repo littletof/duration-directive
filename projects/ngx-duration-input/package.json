@@ -1,0 +1,28 @@
+{
+  "name": "ngx-duration-input",
+  "version": "0.0.1",
+  "description": "A directive that lets you input durations like '2 h 25', '2.5', '1:25' and convet the output to minutes, and the display value to a standard format",
+  "author": "littletof",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/littletof/duration-directive.git"
+  },
+  "bugs": {
+    "url": "https://github.com/littletof/duration-directive/issues"
+  },
+  "homepage": "https://github.com/littletof/duration-directive",
+  "keywords": [
+    "angular",
+    "ngx",
+    "duration",
+    "directive",
+    "input",
+    "form",
+    "length",
+    "time"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^8.2.0",
+    "@angular/core": "^8.2.0"
+  }
+}

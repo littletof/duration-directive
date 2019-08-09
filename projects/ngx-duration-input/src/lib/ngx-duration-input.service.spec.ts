@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DurationService } from './duration.service';
+import { NgxDurationInputService } from './ngx-duration-input.service';
 
-describe('DurationService', () => {
-  let service: DurationService;
+describe('NgxDurationInputService', () => {
+  let service: NgxDurationInputService;
   let testCases: any[];
 
   const permutateCase = (testCase: { inputString: string; parsedValue?: number; invalid?: boolean }) => {
@@ -73,9 +73,9 @@ describe('DurationService', () => {
   describe('getDurationString', () => {
     testCases = [
       { inputNumber: 0, stringified: null },
-      { inputNumber: 15, stringified: '15 MINUTE_SHORT' },
-      { inputNumber: 120, stringified: '2 HOUR_SHORT' },
-      { inputNumber: 150, stringified: '2 HOUR_SHORT 30 MINUTE_SHORT' }
+      { inputNumber: 15, stringified: '15 m' },
+      { inputNumber: 120, stringified: '2 h' },
+      { inputNumber: 150, stringified: '2 h 30 m' }
     ];
     testCases.forEach((testCase, index) => {
       it(`should stringify ${testCase.inputNumber} minutes to ${testCase.stringified}`, () => {
@@ -92,6 +92,7 @@ describe('DurationService', () => {
     TestBed.configureTestingModule({
       imports: []
     });
-    service = TestBed.get(DurationService);
+    service = TestBed.get(NgxDurationInputService);
   });
 });
+

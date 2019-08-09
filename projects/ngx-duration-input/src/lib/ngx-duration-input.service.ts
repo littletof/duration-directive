@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class DurationService {
+export class NgxDurationInputService {
   numRegx = '[1-9][0-9]*';
   decimalRegx = `[0-9]*[\\.,][0-9]*[1-9][0-9]*`;
   spaceRegx = `[\\s]*`;
@@ -144,3 +144,4 @@ export class DurationService {
       .replace(':', '');
   }
 }
+

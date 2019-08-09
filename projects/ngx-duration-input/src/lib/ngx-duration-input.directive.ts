@@ -1,5 +1,4 @@
 import { Directive, ElementRef, HostListener, Renderer2, forwardRef } from '@angular/core';
-import { DurationService } from './duration.service';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -8,28 +7,29 @@ import {
   AbstractControl,
   ValidationErrors
 } from '@angular/forms';
+import { NgxDurationInputService } from './ngx-duration-input.service';
 
 @Directive({
-  selector: '[appDuration]',
+  selector: '[ngxDuration]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DurationDirective),
+      useExisting: forwardRef(() => NgxDurationInputDirective),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => DurationDirective),
+      useExisting: forwardRef(() => NgxDurationInputDirective),
       multi: true
     }
   ]
 })
-export class DurationDirective implements ControlValueAccessor, Validator {
+export class NgxDurationInputDirective implements ControlValueAccessor, Validator {
   onChangeCallback = (_: any) => {};
   onTouchedCallback = () => {};
 
   constructor(
-    private durationService: DurationService,
+    private durationService: NgxDurationInputService,
     private renderer: Renderer2,
     private elementRef: ElementRef
   ) {}
@@ -63,7 +63,7 @@ export class DurationDirective implements ControlValueAccessor, Validator {
     }
   }
 
-  /** Writes the display value into the input */
+  /** Writes the display value into the input. ControlValueAccessor */
   writeValue(inputValue: any): void {
     const parsedValue = this.durationService.parseDurationString(inputValue);
 
