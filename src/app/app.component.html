@@ -17,21 +17,22 @@
         required
       />
 
-      <mat-error *ngIf="form.controls['duration']?.errors; let errors" [ngSwitch]="(errors | keyvalue)[0].key">
+     <!--  <mat-error *ngIf="form.controls['duration']?.errors; let errors" [ngSwitch]="(errors | keyvalue)[0].key">
         <span *ngSwitchCase="'required'">{{ 'Duration value is required' }}</span>
         <span *ngSwitchCase="'pattern'">{{ 'Invalid duration format' }}</span>
+      </mat-error> -->
+
+      <mat-error *ngIf="form.controls['duration'].hasError('required')">
+        <span>{{ 'Duration value is required' }}</span>
+      </mat-error>
+      <mat-error *ngIf="form.controls['duration'].hasError('pattern')">
+        <span>{{ 'Invalid duration format' }}</span>
       </mat-error>
     </mat-form-field>
     
     <div>
       NgModel value: {{duration}}
     </div>
-
-    <!-- <div>
-      <div *ngFor="let h of handled">
-        "{{h}}"
-      </div>
-    </div> -->
 
     <mat-form-field class="field pt" color="accent" appearance="outline">
         <mat-label>Duration</mat-label>
@@ -45,11 +46,6 @@
           required
           disabled
         />
-  
-        <mat-error *ngIf="form.controls['disabledDuration']?.errors; let errors" [ngSwitch]="(errors | keyvalue)[0].key">
-          <span *ngSwitchCase="'required'">{{ 'Duration value is required' }}</span>
-          <span *ngSwitchCase="'pattern'">{{ 'Invalid duration format' }}</span>
-        </mat-error>
       </mat-form-field>
   </form>
 
