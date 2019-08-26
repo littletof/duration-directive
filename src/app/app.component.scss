@@ -3,6 +3,15 @@
     height: 100%;
     display: flex;
     text-align: center;
+    flex-direction: column;
+}
+
+h1 > a {
+    vertical-align: middle;
+
+    &, &:visited, &:hover, &:active {
+        color: #2062b2;
+    }
 }
 
 .field{
