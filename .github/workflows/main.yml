@@ -23,7 +23,7 @@ jobs:
     - name: Build library
       run: npm run build:lib
     - name: Test library
-      run: npm test:lib -- --configuration=ci
+      run: npm run test:lib -- --configuration=ci
 
 
   test-demo-page:
