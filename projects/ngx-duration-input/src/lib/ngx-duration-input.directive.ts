@@ -69,7 +69,7 @@ export class NgxDurationInputDirective implements ControlValueAccessor, Validato
 
     let displayValue;
     // tslint:disable-next-line:prefer-conditional-expression
-    if (inputValue === '0' || !isNaN(parsedValue)) {
+    if (inputValue === '0' || (parsedValue != null && !isNaN(parsedValue))) {
       // if input is 0 or parseable
       displayValue = this.durationService.getDurationString(parsedValue);
     } else {
