@@ -44,5 +44,5 @@ jobs:
       run: npm run lint
 #    - name: Build library
 #      run: npm run build -- --prod
-    - name: Test
-      run: npm run test-ci
+#    - name: Test
+#      run: npm run test-ci
