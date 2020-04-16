@@ -6,11 +6,8 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-
-    # Machine environment:
-    # https://help.github.com/en/articles/software-in-virtual-environments-for-github-actions#ubuntu-1804-lts
-    # We specify the Node.js version manually below, and use versioned Chrome from Puppeteer.
+  test-lib:
+    name: Testing npm package
     runs-on: ubuntu-18.04
 
     steps:
@@ -21,9 +18,31 @@ jobs:
         node-version: 12.8
     - name: Install dependencies
       run: npm install
-    - name: Lint
-      run: npm run lint
-    - name: Build
-      run: npm run build -- --prod
+    - name: Lint library
+      run: npm run lint:lib
+    - name: Build library
+      run: npm run build:lib -- --prod
     - name: Test
-      run: npm test -- --configuration=ci
+      run: npm test:lib -- --configuration=ci
+
+
+  test-demo-page:
+    name: Testing demo page
+    needs: test-lib
+    
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.8
+        uses: actions/setup-node@v1
+        with:
+        node-version: 12.8
+    - name: Install dependencies
+        run: npm install
+    - name: Lint library
+        run: npm run lint
+    - name: Build library
+        run: npm run build -- --prod
+    - name: Test
+        run: npm test -- --configuration=ci
