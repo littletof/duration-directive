@@ -31,7 +31,12 @@
     </mat-form-field> 
     
     <div>
-      NgModel value: {{duration}}
+      NgModel value: [{{getValue(duration)}}]
+    </div>
+    <br><br>
+    <div>
+      <button mat-raised-button color="primary" (click)="setValue(null)" type="button">Insert NULL</button>
+      <button mat-raised-button color="primary" (click)="setValue(undefined)" type="button">Insert UNDEFINED</button>
     </div>
 
     <mat-form-field class="field pt" color="accent" appearance="outline">

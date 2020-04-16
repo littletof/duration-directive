@@ -61,4 +61,12 @@ export class AppComponent {
   constructor() {
     setInterval(() => this.disabledDuration += 1, 1000);
   }
+
+  setValue(value: any) {
+    this.duration = value;
+  }
+
+  getValue(value: any) {
+    return JSON.stringify(value);
+  }
 }
