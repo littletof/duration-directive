@@ -33,17 +33,27 @@ describe('NgxDurationInputService', () => {
 
   const generateTestCases = () => {
     const startTestCases = [
+      { inputString: '0', parsedValue: 0 },
+      { inputString: '0000', parsedValue: 0 },
+      { inputString: '0 0', parsedValue: 0 },
       { inputString: '150', parsedValue: 150 },
+      { inputString: '0p', parsedValue: 0 },
       { inputString: '150p', parsedValue: 150 },
       { inputString: '2ó', parsedValue: 120 },
+      { inputString: '0ó', parsedValue: 0 },
       { inputString: '1.5', parsedValue: 90 },
       { inputString: '1.5ó', parsedValue: 90 },
       { inputString: '1ó15', parsedValue: 75 },
+      { inputString: '0ó15', parsedValue: 15 },
       { inputString: '1:15', parsedValue: 75 },
+      { inputString: '0:15', parsedValue: 15 },
       { inputString: '1 15', parsedValue: 75 },
+      { inputString: '0 15', parsedValue: 15 },
       { inputString: '1ó15p', parsedValue: 75 },
+      { inputString: '0ó15p', parsedValue: 15 },
 
       { inputString: 'invalid', invalid: true },
+      { inputString: ' ', invalid: true },
       { inputString: '15óó', invalid: true },
       { inputString: '15pp', invalid: true }
     ];
@@ -72,13 +82,15 @@ describe('NgxDurationInputService', () => {
 
   describe('getDurationString', () => {
     testCases = [
-      { inputNumber: 0, stringified: null },
+      { inputNumber: null, stringified: '' },
+      { inputNumber: undefined, stringified: null },
+      { inputNumber: 0, stringified: '0 m' },
       { inputNumber: 15, stringified: '15 m' },
       { inputNumber: 120, stringified: '2 h' },
       { inputNumber: 150, stringified: '2 h 30 m' }
     ];
     testCases.forEach((testCase, index) => {
-      it(`should stringify ${testCase.inputNumber} minutes to ${testCase.stringified}`, () => {
+      it(`should stringify ${testCase.inputNumber} minutes to '${testCase.stringified}'`, () => {
         expect(service.getDurationString(testCase.inputNumber)).toEqual(testCase.stringified);
       });
     });

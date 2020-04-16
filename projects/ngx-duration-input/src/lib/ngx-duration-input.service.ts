@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NgxDurationInputService {
-  numRegx = '[1-9][0-9]*';
+  numRegx = '[0-9]*';
   decimalRegx = `[0-9]*[\\.,][0-9]*[1-9][0-9]*`;
   spaceRegx = `[\\s]*`;
   hrRegx = `${this.spaceRegx}[óÓhH:]${this.spaceRegx}`; // TODO : handle differently ( 1: -> 1ó engedjük e), :15 nem parsolja
@@ -36,7 +36,7 @@ export class NgxDurationInputService {
   constructor() {}
 
   getDurationString(duration: number): string {
-    if (!duration) {
+    if (isNaN(duration)) {
       return null;
     }
 
@@ -53,7 +53,7 @@ export class NgxDurationInputService {
       value += ' ';
     }
 
-    if (min) {
+    if (min || duration === 0) {
       // value += `${min} ${this.translateService.instant('MINUTE_SHORT')}`;
       value += `${min} m`;
     }
@@ -61,14 +61,10 @@ export class NgxDurationInputService {
     return value;
   }
 
-  parseDurationString(value: string): number | null {
-    if (!value) {
-      return;
-    }
-
+  parseDurationString(value: string | number): number | null {
     value = `${value} `.trim();
 
-    if (!value) {
+    if (this.isEmptyString(value)) {
       return;
     }
 
@@ -112,10 +108,14 @@ export class NgxDurationInputService {
   }
 
   isParseable(value: string): boolean {
-    if (!value) {
+    if (this.isEmptyString(value)) {
       return false;
     }
     return !!value.match(this.durationRegex);
+  }
+
+  private isEmptyString(value: string | number) {
+    return `${value} `.trim() === '';
   }
 
   private stdizeSeparator(value: string): string {

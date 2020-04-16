@@ -23,51 +23,182 @@ webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
-/***/ "./dist/ngx-duration-input/fesm2015/ngx-duration-input.js":
-/*!****************************************************************!*\
-  !*** ./dist/ngx-duration-input/fesm2015/ngx-duration-input.js ***!
-  \****************************************************************/
-/*! exports provided: NgxDurationInputDirective, NgxDurationInputModule, NgxDurationInputService */
+/***/ "./node_modules/raw-loader/index.js!./src/app/app.component.html":
+/*!**************************************************************!*\
+  !*** ./node_modules/raw-loader!./src/app/app.component.html ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\r\n<div class=\"outer\">\r\n  \r\n  <h1>ngx-duration-input \r\n    <a href=\"https://www.npmjs.com/package/ngx-duration-input\"><mat-icon>link</mat-icon></a></h1>\r\n\r\n  <form #form=\"ngForm\">\r\n    <mat-form-field class=\"field\" color=\"accent\" appearance=\"outline\">\r\n      <mat-label>Duration</mat-label>\r\n\r\n      <input\r\n        name=\"duration\"\r\n        matInput\r\n        ngxDuration\r\n        placeholder=\"{{ 'Duration' }}\"\r\n        [(ngModel)]=\"duration\"\r\n        required\r\n      />\r\n\r\n      <mat-error *ngIf=\"form.controls['duration']?.errors; let errors\" [ngSwitch]=\"(errors | keyvalue)[0].key\">\r\n        <span *ngSwitchCase=\"'required'\">{{ 'Duration value is required' }}</span>\r\n        <span *ngSwitchCase=\"'pattern'\">{{ 'Invalid duration format' }}</span>\r\n      </mat-error>\r\n\r\n      <!-- <mat-error *ngIf=\"form.controls['duration'].hasError('required')\">\r\n        <span>{{ 'Duration value is required' }}</span>\r\n      </mat-error>\r\n      <mat-error *ngIf=\"form.controls['duration'].hasError('pattern')\">\r\n        <span>{{ 'Invalid duration format' }}</span>\r\n      </mat-error> -->\r\n    </mat-form-field> \r\n    \r\n    <div>\r\n      NgModel value: <{{getValue(duration)}}>\r\n    </div>\r\n    <br><br>\r\n    <div>\r\n      <button mat-raised-button color=\"primary\" (click)=\"setValue(null)\" type=\"button\">Insert NULL</button>\r\n      <button mat-raised-button color=\"primary\" (click)=\"setValue(undefined)\" type=\"button\">Insert UNDEFINED</button>\r\n    </div>\r\n\r\n    <mat-form-field class=\"field pt\" color=\"accent\" appearance=\"outline\">\r\n        <mat-label>Duration</mat-label>\r\n  \r\n        <input\r\n          name=\"disabledDuration\"\r\n          matInput\r\n          ngxDuration\r\n          placeholder=\"{{ 'Duration' }}\"\r\n          [(ngModel)]=\"disabledDuration\"\r\n          required\r\n          disabled\r\n        />\r\n      </mat-form-field>\r\n  </form>\r\n\r\n\r\n</div>"
+
+/***/ }),
+
+/***/ "./projects/ngx-duration-input/src/lib/ngx-duration-input.directive.ts":
+/*!*****************************************************************************!*\
+  !*** ./projects/ngx-duration-input/src/lib/ngx-duration-input.directive.ts ***!
+  \*****************************************************************************/
+/*! exports provided: NgxDurationInputDirective */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxDurationInputDirective", function() { return NgxDurationInputDirective; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _ngx_duration_input_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ngx-duration-input.service */ "./projects/ngx-duration-input/src/lib/ngx-duration-input.service.ts");
+var NgxDurationInputDirective_1;
+
+
+
+
+let NgxDurationInputDirective = NgxDurationInputDirective_1 = class NgxDurationInputDirective {
+    constructor(durationService, renderer, elementRef) {
+        this.durationService = durationService;
+        this.renderer = renderer;
+        this.elementRef = elementRef;
+        this.onChangeCallback = (_) => { };
+        this.onTouchedCallback = () => { };
+    }
+    blur(value) {
+        this.updateValue(value);
+        this.onTouchedCallback();
+    }
+    enter(value) {
+        this.updateValue(value);
+    }
+    updateValue(value) {
+        // update display value
+        this.writeValue(value);
+        // updates ngModel value based on input
+        this.onChangeCallback(this.durationService.parseDurationString(value));
+    }
+    validate(_) {
+        const inputValue = this.elementRef.nativeElement.value.trim();
+        const parsable = this.durationService.isParseable(inputValue);
+        // if has notnull input and its not parsable
+        if (!!inputValue && !parsable) {
+            return { pattern: true };
+        }
+        else {
+            return null;
+        }
+    }
+    /** Writes the display value into the input. ControlValueAccessor */
+    writeValue(inputValue) {
+        const parsedValue = this.durationService.parseDurationString(inputValue);
+        let displayValue;
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (inputValue === '0' || (parsedValue != null && !isNaN(parsedValue))) {
+            // if input is 0 or parseable
+            displayValue = this.durationService.getDurationString(parsedValue);
+        }
+        else {
+            displayValue = !inputValue ? '' : (inputValue + '').trim();
+        }
+        this.renderer.setProperty(this.elementRef.nativeElement, 'value', displayValue);
+    }
+    registerOnChange(fn) {
+        this.onChangeCallback = fn;
+    }
+    registerOnTouched(fn) {
+        this.onTouchedCallback = fn;
+    }
+    setDisabledState(isDisabled) { }
+};
+NgxDurationInputDirective.ctorParameters = () => [
+    { type: _ngx_duration_input_service__WEBPACK_IMPORTED_MODULE_3__["NgxDurationInputService"] },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('blur', ['$event.target.value'])
+], NgxDurationInputDirective.prototype, "blur", null);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('keyup.enter', ['$event.target.value'])
+], NgxDurationInputDirective.prototype, "enter", null);
+NgxDurationInputDirective = NgxDurationInputDirective_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
+        selector: '[ngxDuration]',
+        providers: [
+            {
+                provide: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NG_VALUE_ACCESSOR"],
+                useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => NgxDurationInputDirective_1),
+                multi: true
+            },
+            {
+                provide: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NG_VALIDATORS"],
+                useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(() => NgxDurationInputDirective_1),
+                multi: true
+            }
+        ]
+    })
+], NgxDurationInputDirective);
+
+
+
+/***/ }),
+
+/***/ "./projects/ngx-duration-input/src/lib/ngx-duration-input.module.ts":
+/*!**************************************************************************!*\
+  !*** ./projects/ngx-duration-input/src/lib/ngx-duration-input.module.ts ***!
+  \**************************************************************************/
+/*! exports provided: NgxDurationInputModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxDurationInputModule", function() { return NgxDurationInputModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _ngx_duration_input_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ngx-duration-input.directive */ "./projects/ngx-duration-input/src/lib/ngx-duration-input.directive.ts");
+
+
+
+let NgxDurationInputModule = class NgxDurationInputModule {
+};
+NgxDurationInputModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        declarations: [_ngx_duration_input_directive__WEBPACK_IMPORTED_MODULE_2__["NgxDurationInputDirective"]],
+        imports: [],
+        exports: [_ngx_duration_input_directive__WEBPACK_IMPORTED_MODULE_2__["NgxDurationInputDirective"]]
+    })
+], NgxDurationInputModule);
+
+
+
+/***/ }),
+
+/***/ "./projects/ngx-duration-input/src/lib/ngx-duration-input.service.ts":
+/*!***************************************************************************!*\
+  !*** ./projects/ngx-duration-input/src/lib/ngx-duration-input.service.ts ***!
+  \***************************************************************************/
+/*! exports provided: NgxDurationInputService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgxDurationInputService", function() { return NgxDurationInputService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 
 
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class NgxDurationInputService {
+let NgxDurationInputService = class NgxDurationInputService {
     constructor() {
-        this.numRegx = '[1-9][0-9]*';
+        this.numRegx = '[0-9]*';
         this.decimalRegx = `[0-9]*[\\.,][0-9]*[1-9][0-9]*`;
         this.spaceRegx = `[\\s]*`;
         this.hrRegx = `${this.spaceRegx}[óÓhH:]${this.spaceRegx}`; // TODO : handle differently ( 1: -> 1ó engedjük e), :15 nem parsolja
-        // TODO : handle differently ( 1: -> 1ó engedjük e), :15 nem parsolja
         this.minRegx = `${this.spaceRegx}[pPmM]${this.spaceRegx}`;
         this.justNumbers = `^${this.numRegx}${this.spaceRegx}$`; // 150 -> 150 perc
-        // 150 -> 150 perc
         this.numbersWithMinPostfix = `^${this.numRegx}${this.spaceRegx}${this.minRegx}${this.spaceRegx}$`; // 150p -> 150 perc
-        // 150p -> 150 perc
         this.numbersWithHourPostfix = `^${this.numRegx}${this.spaceRegx}${this.hrRegx}${this.spaceRegx}$`; // 2ó -> 120 perc
-        // 2ó -> 120 perc
         this.decimalNumbers = `^${this.decimalRegx}${this.spaceRegx}$`; // 1.5 -> 90 perc
-        // 1.5 -> 90 perc
         this.decimalNumbersWithHourPostfix = `^${this.decimalRegx}${this.spaceRegx}${this.hrRegx}${this.spaceRegx}$`; // 1.5ó -> 90 perc
-        // 1.5ó -> 90 perc
         this.numbersWithHourInfix = `^${this.numRegx}${this.hrRegx}${this.numRegx}${this.spaceRegx}$`; // 1ó15 -> 75 perc
-        // 1ó15 -> 75 perc
         this.numbersWithWhitespaceInfix = `^${this.numRegx}${this.spaceRegx}${this.numRegx}${this.spaceRegx}$`; // 1 15 -> 75 perc
-        // 1 15 -> 75 perc
         this.numbersWithAllPostfix = `^${this.numRegx}${this.hrRegx}${this.numRegx}${this.minRegx}$`; // 1ó15p -> 75 perc
-        // 1ó15p -> 75 perc
         this.durationRegex = `(` +
             [
                 this.justNumbers,
@@ -81,19 +212,12 @@ class NgxDurationInputService {
             ].join(')|(') +
             `)`;
     }
-    /**
-     * @param {?} duration
-     * @return {?}
-     */
     getDurationString(duration) {
-        if (!duration) {
+        if (isNaN(duration)) {
             return null;
         }
-        /** @type {?} */
         let value = '';
-        /** @type {?} */
         const hr = Math.floor(duration / 60);
-        /** @type {?} */
         const min = duration - 60 * hr;
         if (hr) {
             // value = `${hr} ${this.translateService.instant('HOUR_SHORT')}`;
@@ -102,22 +226,15 @@ class NgxDurationInputService {
         if (hr && min) {
             value += ' ';
         }
-        if (min) {
+        if (min || duration === 0) {
             // value += `${min} ${this.translateService.instant('MINUTE_SHORT')}`;
             value += `${min} m`;
         }
         return value;
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     parseDurationString(value) {
-        if (!value) {
-            return;
-        }
         value = `${value} `.trim();
-        if (!value) {
+        if (this.isEmptyString(value)) {
             return;
         }
         // convert to <x>h<y> format
@@ -159,59 +276,35 @@ class NgxDurationInputService {
         else {
             return;
         }
-        /** @type {?} */
         const values = value.split('h');
-        /** @type {?} */
         const hr = parseFloat(values[0].trim());
-        /** @type {?} */
         const min = parseFloat(values[1].trim());
         return Math.ceil(hr * 60) + min;
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     isParseable(value) {
-        if (!value) {
+        if (this.isEmptyString(value)) {
             return false;
         }
         return !!value.match(this.durationRegex);
     }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
+    isEmptyString(value) {
+        return `${value} `.trim() === '';
+    }
     stdizeSeparator(value) {
         return value.replace(',', '.');
     }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
     stdizeHour(value) {
         return value
             .toLocaleLowerCase()
             .replace('ó', 'h')
             .replace(':', 'h');
     }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
     removeMin(value) {
         return value
             .toLocaleLowerCase()
             .replace('p', '')
             .replace('m', '');
     }
-    /**
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
     removeHour(value) {
         return value
             .toLocaleLowerCase()
@@ -219,184 +312,42 @@ class NgxDurationInputService {
             .replace('h', '')
             .replace(':', '');
     }
-}
-NgxDurationInputService.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"], args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-NgxDurationInputService.ctorParameters = () => [];
-/** @nocollapse */ NgxDurationInputService.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"])({ factory: function NgxDurationInputService_Factory() { return new NgxDurationInputService(); }, token: NgxDurationInputService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class NgxDurationInputDirective {
-    /**
-     * @param {?} durationService
-     * @param {?} renderer
-     * @param {?} elementRef
-     */
-    constructor(durationService, renderer, elementRef) {
-        this.durationService = durationService;
-        this.renderer = renderer;
-        this.elementRef = elementRef;
-        this.onChangeCallback = (/**
-         * @param {?} _
-         * @return {?}
-         */
-        (_) => { });
-        this.onTouchedCallback = (/**
-         * @return {?}
-         */
-        () => { });
-    }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    blur(value) {
-        this.updateValue(value);
-        this.onTouchedCallback();
-    }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    enter(value) {
-        this.updateValue(value);
-    }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    updateValue(value) {
-        // update display value
-        this.writeValue(value);
-        // updates ngModel value based on input
-        this.onChangeCallback(this.durationService.parseDurationString(value));
-    }
-    /**
-     * @param {?} _
-     * @return {?}
-     */
-    validate(_) {
-        /** @type {?} */
-        const inputValue = this.elementRef.nativeElement.value.trim();
-        /** @type {?} */
-        const parsable = this.durationService.isParseable(inputValue);
-        // if has notnull input and its not parsable
-        if (!!inputValue && !parsable) {
-            return { pattern: true };
-        }
-        else {
-            return null;
-        }
-    }
-    /**
-     * Writes the display value into the input. ControlValueAccessor
-     * @param {?} inputValue
-     * @return {?}
-     */
-    writeValue(inputValue) {
-        /** @type {?} */
-        const parsedValue = this.durationService.parseDurationString(inputValue);
-        /** @type {?} */
-        let displayValue;
-        // tslint:disable-next-line:prefer-conditional-expression
-        if (inputValue === '0' || !!parsedValue) {
-            // if input is 0 or parseable
-            displayValue = this.durationService.getDurationString(parsedValue);
-        }
-        else {
-            displayValue = !inputValue ? '' : (inputValue + '').trim();
-        }
-        this.renderer.setProperty(this.elementRef.nativeElement, 'value', displayValue);
-    }
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    registerOnChange(fn) {
-        this.onChangeCallback = fn;
-    }
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    registerOnTouched(fn) {
-        this.onTouchedCallback = fn;
-    }
-    /**
-     * @param {?} isDisabled
-     * @return {?}
-     */
-    setDisabledState(isDisabled) { }
-}
-NgxDurationInputDirective.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
-                selector: '[ngxDuration]',
-                providers: [
-                    {
-                        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NG_VALUE_ACCESSOR"],
-                        useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])((/**
-                         * @return {?}
-                         */
-                        () => NgxDurationInputDirective)),
-                        multi: true
-                    },
-                    {
-                        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NG_VALIDATORS"],
-                        useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])((/**
-                         * @return {?}
-                         */
-                        () => NgxDurationInputDirective)),
-                        multi: true
-                    }
-                ]
-            },] }
-];
-/** @nocollapse */
-NgxDurationInputDirective.ctorParameters = () => [
-    { type: NgxDurationInputService },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"] },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }
-];
-NgxDurationInputDirective.propDecorators = {
-    blur: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"], args: ['blur', ['$event.target.value'],] }],
-    enter: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"], args: ['keyup.enter', ['$event.target.value'],] }]
 };
+NgxDurationInputService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], NgxDurationInputService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class NgxDurationInputModule {
-}
-NgxDurationInputModule.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
-                declarations: [NgxDurationInputDirective],
-                imports: [],
-                exports: [NgxDurationInputDirective]
-            },] }
-];
-
-
-//# sourceMappingURL=ngx-duration-input.js.map
 
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./src/app/app.component.html":
-/*!**************************************************************!*\
-  !*** ./node_modules/raw-loader!./src/app/app.component.html ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./projects/ngx-duration-input/src/public-api.ts":
+/*!*******************************************************!*\
+  !*** ./projects/ngx-duration-input/src/public-api.ts ***!
+  \*******************************************************/
+/*! exports provided: NgxDurationInputService, NgxDurationInputDirective, NgxDurationInputModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n<div class=\"outer\">\n  \n  <h1>ngx-duration-input \n    <a href=\"https://www.npmjs.com/package/ngx-duration-input\"><mat-icon>link</mat-icon></a></h1>\n\n  <form #form=\"ngForm\">\n    <mat-form-field class=\"field\" color=\"accent\" appearance=\"outline\">\n      <mat-label>Duration</mat-label>\n\n      <input\n        name=\"duration\"\n        matInput\n        ngxDuration\n        placeholder=\"{{ 'Duration' }}\"\n        [(ngModel)]=\"duration\"\n        required\n      />\n\n      <mat-error *ngIf=\"form.controls['duration']?.errors; let errors\" [ngSwitch]=\"(errors | keyvalue)[0].key\">\n        <span *ngSwitchCase=\"'required'\">{{ 'Duration value is required' }}</span>\n        <span *ngSwitchCase=\"'pattern'\">{{ 'Invalid duration format' }}</span>\n      </mat-error>\n\n      <!-- <mat-error *ngIf=\"form.controls['duration'].hasError('required')\">\n        <span>{{ 'Duration value is required' }}</span>\n      </mat-error>\n      <mat-error *ngIf=\"form.controls['duration'].hasError('pattern')\">\n        <span>{{ 'Invalid duration format' }}</span>\n      </mat-error> -->\n    </mat-form-field> \n    \n    <div>\n      NgModel value: {{duration}}\n    </div>\n\n    <mat-form-field class=\"field pt\" color=\"accent\" appearance=\"outline\">\n        <mat-label>Duration</mat-label>\n  \n        <input\n          name=\"disabledDuration\"\n          matInput\n          ngxDuration\n          placeholder=\"{{ 'Duration' }}\"\n          [(ngModel)]=\"disabledDuration\"\n          required\n          disabled\n        />\n      </mat-form-field>\n  </form>\n\n\n</div>"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _lib_ngx_duration_input_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/ngx-duration-input.service */ "./projects/ngx-duration-input/src/lib/ngx-duration-input.service.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxDurationInputService", function() { return _lib_ngx_duration_input_service__WEBPACK_IMPORTED_MODULE_0__["NgxDurationInputService"]; });
+
+/* harmony import */ var _lib_ngx_duration_input_directive__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/ngx-duration-input.directive */ "./projects/ngx-duration-input/src/lib/ngx-duration-input.directive.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxDurationInputDirective", function() { return _lib_ngx_duration_input_directive__WEBPACK_IMPORTED_MODULE_1__["NgxDurationInputDirective"]; });
+
+/* harmony import */ var _lib_ngx_duration_input_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lib/ngx-duration-input.module */ "./projects/ngx-duration-input/src/lib/ngx-duration-input.module.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NgxDurationInputModule", function() { return _lib_ngx_duration_input_module__WEBPACK_IMPORTED_MODULE_2__["NgxDurationInputModule"]; });
+
+/*
+ * Public API Surface of ngx-duration-input
+ */
+
+
+
+
 
 /***/ }),
 
@@ -476,6 +427,12 @@ let AppComponent = class AppComponent {
         ];
         setInterval(() => this.disabledDuration += 1, 1000);
     }
+    setValue(value) {
+        this.duration = value;
+    }
+    getValue(value) {
+        return JSON.stringify(value);
+    }
 };
 AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -506,7 +463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm2015/animations.js");
-/* harmony import */ var ngx_duration_input__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-duration-input */ "./dist/ngx-duration-input/fesm2015/ngx-duration-input.js");
+/* harmony import */ var _projects_ngx_duration_input_src_public_api__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../projects/ngx-duration-input/src/public-api */ "./projects/ngx-duration-input/src/public-api.ts");
 
 
 
@@ -529,7 +486,8 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatFormFieldModule"],
             _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatIconModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormsModule"],
-            ngx_duration_input__WEBPACK_IMPORTED_MODULE_7__["NgxDurationInputModule"]
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatButtonModule"],
+            _projects_ngx_duration_input_src_public_api__WEBPACK_IMPORTED_MODULE_7__["NgxDurationInputModule"]
         ],
         providers: [],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]

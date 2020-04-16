@@ -64,12 +64,12 @@ export class NgxDurationInputDirective implements ControlValueAccessor, Validato
   }
 
   /** Writes the display value into the input. ControlValueAccessor */
-  writeValue(inputValue: any): void {
+  writeValue(inputValue: string | number): void {
     const parsedValue = this.durationService.parseDurationString(inputValue);
 
     let displayValue;
     // tslint:disable-next-line:prefer-conditional-expression
-    if (inputValue === '0' || !!parsedValue) {
+    if (inputValue === '0' || (parsedValue != null && !isNaN(parsedValue))) {
       // if input is 0 or parseable
       displayValue = this.durationService.getDurationString(parsedValue);
     } else {
