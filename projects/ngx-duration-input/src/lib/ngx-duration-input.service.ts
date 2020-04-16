@@ -114,7 +114,7 @@ export class NgxDurationInputService {
     return !!value.match(this.durationRegex);
   }
 
-  private isEmptyString(value: string | number){
+  private isEmptyString(value: string | number) {
     return `${value} `.trim() === '';
   }
 
