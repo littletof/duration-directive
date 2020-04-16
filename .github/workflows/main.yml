@@ -1,0 +1,48 @@
+# GitHub Actions docs
+# https://help.github.com/en/articles/about-github-actions
+# https://help.github.com/en/articles/workflow-syntax-for-github-actions
+name: CI
+
+on: [push]
+
+jobs:
+  test-lib:
+    name: Testing npm package
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.8
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.8
+    - name: Install dependencies
+      run: npm install
+    - name: Lint library
+      run: npm run lint:lib
+    - name: Build library
+      run: npm run build:lib
+    - name: Test library
+      run: npm run test:lib-ci
+
+
+  test-demo-page:
+    name: Testing demo page
+    needs: test-lib
+    
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12.8
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.8
+    - name: Install dependencies
+      run: npm install
+    - name: Lint library
+      run: npm run lint
+#    - name: Build library
+#      run: npm run build -- --prod
+#    - name: Test
+#      run: npm run test-ci

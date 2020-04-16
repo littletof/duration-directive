@@ -57,7 +57,7 @@ export class AppComponent {
     '1:',
     // ':1'
   ];
-  
+
   constructor() {
     setInterval(() => this.disabledDuration += 1, 1000);
   }
