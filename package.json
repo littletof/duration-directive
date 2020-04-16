@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build --base-href \"duration-directive\"",
     "test": "ng test",
+    "test:lib": "ng test ngx-duration-input",
+    "test:lib-coverage": "ng test ngx-duration-input --code-coverage --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
