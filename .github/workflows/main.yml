@@ -42,7 +42,7 @@ jobs:
       run: npm install
     - name: Lint library
       run: npm run lint
-    - name: Build library
-      run: npm run build -- --prod
+#    - name: Build library
+#      run: npm run build -- --prod
     - name: Test
       run: npm run test-ci
